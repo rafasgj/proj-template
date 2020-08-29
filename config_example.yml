@@ -1,0 +1,18 @@
+# This is an example project configuration.
+---
+project:
+  name: example_project
+  description: Create a minimal Python project directory.
+  license: MIT
+  keywords:
+    - CLI
+    - Development Tool
+author:
+  name: Rafael Guterres Jeffman
+  email: rafasgj@gmail.com
+  githubuser: rafasgj
+requires:
+  install:
+    - pyyaml
+  tests:
+    - yamllint

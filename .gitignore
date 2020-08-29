@@ -1,0 +1,10 @@
+*.pyc
+
+/.tox/
+/.venv/
+/build/
+/dist/
+/*.egg-info/
+
+# example output
+/example_project/
