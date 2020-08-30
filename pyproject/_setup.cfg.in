@@ -105,3 +105,8 @@ max-nested-blocks = 5
 ignored-modules = behave
 max-line-length = 79
 load-plugins = pylint.extensions.mccabe
+
+[behave]
+stop = true
+stdout_capture = true
+junit = false
