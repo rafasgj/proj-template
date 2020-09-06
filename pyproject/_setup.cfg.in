@@ -110,3 +110,13 @@ load-plugins = pylint.extensions.mccabe
 stop = true
 stdout_capture = true
 junit = false
+
+[coverage:run]
+omit =
+    .tox/*
+    .venv/*
+    /usr/*
+    tests/*
+    features/*
+    */.local/*
+
