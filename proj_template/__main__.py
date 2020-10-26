@@ -1,4 +1,4 @@
-"""CLI entry point for pyproject."""
+"""CLI entry point for proj-template."""
 
 import sys
 import yaml
@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 import os.path
 
-from pyproject.pyproject import (
+from proj_template.proj_template import (
     build_copying,
     build_setup_cfg,
     create_project_dirs,

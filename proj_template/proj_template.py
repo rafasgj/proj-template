@@ -14,7 +14,7 @@ def create_project_dirs(target_dir):
 
 def build_setup_cfg(target_dir, config_data):
     """Generate a setup.cfg file in the new project directory."""
-    filename = resource_filename("pyproject", "/_setup.cfg.in")
+    filename = resource_filename("proj_template", "/_setup.cfg.in")
     with open(filename, "rt") as infile:
         with open(os.path.join(target_dir, "setup.cfg"), "wt") as outfile:
             print(infile.read().format(**config_data), file=outfile)
@@ -82,6 +82,7 @@ SOFTWARE.
             text = text.decode("utf-8")
     with open(os.path.join(target_dir, "COPYING"), "wt") as license_file:
         print(
-            text.format(**config_data), file=license_file,
+            text.format(**config_data),
+            file=license_file,
         )
     return classifier

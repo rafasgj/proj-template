@@ -1,0 +1,1 @@
+"""Initialize proj-template module."""

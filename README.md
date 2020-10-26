@@ -1,5 +1,5 @@
-pyproject
-=========
+proj-template
+=============
 
-`pyproject` is a CLI tool to generate a basic structure for Python projects
-that use `setuptools` for build and distribution.
+`proj-template` is a CLI tool to generate a basic structure for Python
+projects that use `setuptools` for build and distribution.
