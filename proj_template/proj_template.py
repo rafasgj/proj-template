@@ -3,6 +3,42 @@
 import os
 from pkg_resources import resource_filename
 from urllib.request import urlopen
+from datetime import datetime
+
+__main_template = """
+\"\"\"CLI entry point for proj-template.\"\"\"
+
+
+def main():
+    \"\"\"Program entry point.\"\"\"
+
+
+if __name__ == "__main__":
+    main()
+"""
+
+__setup_template = """
+\"\"\"Setup project.\"\"\"
+import setuptools
+
+setuptools.setup()
+"""
+
+
+def create_project(config):
+    """Cerate project."""
+    config["year"] = datetime.now().strftime("%Y")
+    tgt_dir = config["project"]["name"]
+    code_dir = os.path.join(tgt_dir, tgt_dir)
+    create_project_dirs(tgt_dir)
+    with open(os.path.join(code_dir, "__main__.py"), "wt") as main_file:
+        print(__main_template, end="", file=main_file)
+    config["license_classifier"] = build_copying(tgt_dir, config)
+    with open(os.path.join(tgt_dir, "setup.py"), "wt") as setup_py:
+        print(__setup_template, end="", file=setup_py)
+    with open(os.path.join(tgt_dir, "version.txt"), "wt") as version:
+        print(config["project"].get("version", "0.0.1"), file=version)
+    build_setup_cfg(tgt_dir, config)
 
 
 def create_project_dirs(target_dir):
