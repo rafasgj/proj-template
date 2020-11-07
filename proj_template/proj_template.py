@@ -28,34 +28,36 @@ def create_project(config):
     """Cerate project."""
     config["year"] = datetime.now().strftime("%Y")
     tgt_dir = config["project"]["name"]
-    code_dir = os.path.join(tgt_dir, tgt_dir)
-    create_project_dirs(tgt_dir)
+    create_root = config.get("__create_root", True)
+    root_dir = tgt_dir if create_root else "."
+    create_project_dirs(root_dir, tgt_dir)
+    code_dir = os.path.join(root_dir, tgt_dir)
     with open(os.path.join(code_dir, "__main__.py"), "wt") as main_file:
         print(__main_template, end="", file=main_file)
-    config["license_classifier"] = build_copying(tgt_dir, config)
-    with open(os.path.join(tgt_dir, "setup.py"), "wt") as setup_py:
+    config["license_classifier"] = build_copying(root_dir, config)
+    with open(os.path.join(root_dir, "setup.py"), "wt") as setup_py:
         print(__setup_template, end="", file=setup_py)
-    with open(os.path.join(tgt_dir, "version.txt"), "wt") as version:
+    with open(os.path.join(root_dir, "version.txt"), "wt") as version:
         print(config["project"].get("version", "0.0.1"), file=version)
-    build_setup_cfg(tgt_dir, config)
+    build_setup_cfg(root_dir, config)
 
 
-def create_project_dirs(target_dir):
+def create_project_dirs(root_dir, target_dir):
     """Create project directories in the target_dir."""
-    os.makedirs(os.path.join(target_dir, target_dir), exist_ok=True)
-    os.makedirs(os.path.join(target_dir, "tests"), exist_ok=True)
-    os.makedirs(os.path.join(target_dir, "features/steps"), exist_ok=True)
+    os.makedirs(os.path.join(root_dir, target_dir), exist_ok=True)
+    os.makedirs(os.path.join(root_dir, "tests"), exist_ok=True)
+    os.makedirs(os.path.join(root_dir, "features/steps"), exist_ok=True)
 
 
-def build_setup_cfg(target_dir, config_data):
+def build_setup_cfg(root_dir, config_data):
     """Generate a setup.cfg file in the new project directory."""
     filename = resource_filename("proj_template", "/_setup.cfg.in")
     with open(filename, "rt") as infile:
-        with open(os.path.join(target_dir, "setup.cfg"), "wt") as outfile:
+        with open(os.path.join(root_dir, "setup.cfg"), "wt") as outfile:
             print(infile.read().format(**config_data), file=outfile)
 
 
-def build_copying(target_dir, config_data):
+def build_copying(root_dir, config_data):
     """Generateproper  COPYING file on target_dir."""
     MIT_license = """
 Copyright {year} {author[name]}
@@ -115,9 +117,8 @@ SOFTWARE.
         text = urlopen(text).read()
         if isinstance(text, bytes):
             text = text.decode("utf-8")
-    with open(os.path.join(target_dir, "COPYING"), "wt") as license_file:
+    with open(os.path.join(root_dir, "COPYING"), "wt") as license_file:
         print(
-            text.format(**config_data),
-            file=license_file,
+            text.format(**config_data), file=license_file,
         )
     return classifier
