@@ -5,8 +5,7 @@ from pkg_resources import resource_filename
 from urllib.request import urlopen
 from datetime import datetime
 
-__main_template = """
-\"\"\"CLI entry point for proj-template.\"\"\"
+__main_template = """\"\"\"CLI entry point for proj-template.\"\"\"
 
 
 def main():
@@ -17,8 +16,8 @@ if __name__ == "__main__":
     main()
 """
 
-__setup_template = """
-\"\"\"Setup project.\"\"\"
+__setup_template = """\"\"\"Setup project.\"\"\"
+
 import setuptools
 
 setuptools.setup()
