@@ -101,13 +101,13 @@ exclude_lines =
 match-dir = (?!tests)(?!resources)(?!docs)[^\.].*
 match = (?!test)(?!setup)[^\._].*\.py
 inherit = false
-ignore =
+ignore = D203
 
 [flake8]
 max-line-length = 80
 doctests = True
 max-complexity = 10
-extende-ignore = E203, W503
+ignore = D203, E203, W503
 exclude =
     .tox
     .venv
