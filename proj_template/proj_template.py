@@ -25,7 +25,7 @@ setuptools.setup()
 
 
 def create_project(config):
-    """Cerate project."""
+    """Create project."""
     config["year"] = datetime.now().strftime("%Y")
     tgt_dir = config["project"]["name"]
     create_root = config.get("__create_root", True)
