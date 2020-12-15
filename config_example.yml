@@ -16,3 +16,6 @@ requires:
     - pyyaml
   tests:
     - yamllint
+extra:
+  line-length: 80
+  max-complexity: 10

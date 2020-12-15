@@ -95,9 +95,9 @@ inherit = false
 ignore = D203, D212
 
 [flake8]
-max-line-length = 80
+max-line-length = {extra[line-length]}
 doctests = True
-max-complexity = 10
+max-complexity = {extra[max-complexity]}
 ignore = D, E203, W503
 exclude =
     .tox
@@ -112,9 +112,9 @@ exclude =
 [pylint]
 max-nested-blocks = 5
 ignored-modules = behave
-max-line-length = 80
+max-line-length = {extra[line-length]}
 load-plugins = pylint.extensions.mccabe
-max-complexity = 10
+max-complexity = {extra[max-complexity]}
 
 [behave]
 stop = true
@@ -136,7 +136,7 @@ skipsdist = True
 commands =
     python3 -m pip install pip --upgrade
     python3 -m pip install -e .[lint]
-    black -l {style[line_length]} --check .
+    black -l {extra[line-length]} --check .
     python3 -m flake8 .
     python3 -m pydocstyle .
     python3 -m pylint {project[name]} features setup.py
