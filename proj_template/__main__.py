@@ -4,6 +4,8 @@ import os
 import sys
 import yaml
 
+from pkg_resources import resource_filename
+
 from proj_template.proj_template import create_project
 
 
@@ -17,6 +19,19 @@ def usage():
     print("\nOptions:")
     print("    -h, --help     display this help message")
     print("    -R, --no-root  don't create root directory, use current one.")
+
+
+def recursive_update(obj, new):
+    """Merge a dictionary or a list, recursively."""
+    if isinstance(obj, dict):
+        for k, v in new.items():
+            obj[k] = recursive_update(obj.get(k, None), v)
+    elif isinstance(obj, list):
+        new = [new] if not (isinstance(new, list)) else new
+        obj.extend(new)
+    else:
+        return new
+    return obj
 
 
 def main():
@@ -35,10 +50,16 @@ def main():
                 usage()
                 sys.exit(1)
             config_file = opt
+    project_data = dict(
+        __create_root=create_root,
+        requires=dict(dev=[], test=[], install=[]),
+        style=dict(line_length=80),
+        project=dict(version="0.0.1"),
+        template_dir=resource_filename("proj_template", "templates")
+    )
     with open(config_file, "r") as yaml_file:
         cfg_data = yaml.safe_load(yaml_file)
-        cfg_data["__create_root"] = create_root
-        create_project(cfg_data)
+    create_project(recursive_update(project_data, cfg_data))
 
 
 if __name__ == "__main__":
