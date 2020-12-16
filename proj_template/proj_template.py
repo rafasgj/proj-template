@@ -80,8 +80,5 @@ def build_copying(root_dir, config):
         with open(os.path.join(licenses_path, fname), "rt") as input_file:
             text = input_file.read()
     with open(os.path.join(root_dir, "COPYING"), "wt") as license_file:
-        print(
-            text.format(**config),
-            file=license_file,
-        )
+        print(text.format(**config), file=license_file)
     return classifier
