@@ -9,6 +9,7 @@ import yaml
 def create_project(config):
     """Create project."""
     config["year"] = datetime.now().strftime("%Y")
+    config.setdefault("extra", {"line-length": 80, "max-complexity": 12})
     tgt_dir = config["project"]["name"]
     create_root = config.get("__create_root", True)
     root_dir = tgt_dir if create_root else "."
